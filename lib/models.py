@@ -55,3 +55,10 @@ class Movie(Base):
 
     def __repr__(self):
         return f"<Movie(title={self.title}, director={self.director}, genre={self.genre}, watched={self.watched})>"
+    
+    @classmethod
+    def create(cls, session, title, director, genre, category_id=None):
+        movie = cls(title=title, director=director, genre=genre, category_id=category_id)
+        session.add(movie)
+        session.commit()
+        return movie
