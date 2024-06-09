@@ -52,3 +52,6 @@ class Movie(Base):
     category_id = Column(Integer, ForeignKey('categories.id'), nullable=True)
     category = relationship('Category', back_populates='movies')
     reviews = relationship('Review', back_populates='movie', cascade='all, delete-orphan')
+
+    def __repr__(self):
+        return f"<Movie(title={self.title}, director={self.director}, genre={self.genre}, watched={self.watched})>"
