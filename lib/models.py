@@ -62,3 +62,31 @@ class Movie(Base):
         session.add(movie)
         session.commit()
         return movie
+    
+    @classmethod
+    def delete(cls, session, movie_id):
+        movie = session.query(cls).filter_by(id=movie_id).one_or_none()
+        if movie:
+            session.delete(movie)
+            session.commit()
+            return True
+        return False
+    @classmethod
+    def get_all(cls, session):
+        return session.query(cls).all()
+
+    @classmethod
+    def find_by_id(cls, session, movie_id):
+        return session.query(cls).filter_by(id=movie_id).one_or_none()
+
+    @classmethod
+    def find_by_category(cls, session, category_id):
+        return session.query(cls).filter_by(category_id=category_id).all()
+class Review(Base):
+    __tablename__ = 'reviews'
+
+    id = Column(Integer, primary_key=True, index=True)
+    rating = Column(Float, nullable=False)
+    comment = Column(String, nullable=True)
+    movie_id = Column(Integer, ForeignKey('movies.id'))
+    movie = relationship('Movie', back_populates='reviews')  
