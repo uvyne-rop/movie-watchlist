@@ -10,12 +10,33 @@ class Category(Base):
     name = Column(String, unique=True, nullable=False)
     movies = relationship('Movie', back_populates='category', cascade='all, delete-orphan')
 
-def __repr__(self):
+    def __repr__(self):
         return f"<Category(name={self.name})>"
 
-@classmethod
-def create(cls, session, name):
-    category = cls(name=name)
-    session.add(category)
-    session.commit()
-    return category
+    @classmethod
+    def create(cls, session, name):
+        category = cls(name=name)
+        session.add(category)
+        session.commit()
+        return category
+
+    @classmethod
+    def delete(cls, session, category_id):
+        category = session.query(cls).filter_by(id=category_id).one_or_none()
+        if category:
+            session.delete(category)
+            session.commit()
+            return True
+        return False
+
+    @classmethod
+    def get_all(cls, session):
+        return session.query(cls).all()
+
+    @classmethod
+    def find_by_id(cls, session, category_id):
+        return session.query(cls).filter_by(id=category_id).one_or_none()
+
+    @classmethod
+    def find_by_name(cls, session, name):
+        return session.query(cls).filter_by(name=name).one_or_none()
