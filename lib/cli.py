@@ -1,6 +1,6 @@
 import click
-from database import SessionLocal, init_db
-from models import Movie, Review, Category
+from models import SessionLocal, init_db
+from helpers import Movie, Review, Category
 
 @click.group()
 def cli():
