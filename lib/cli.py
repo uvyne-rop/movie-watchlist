@@ -104,7 +104,7 @@ class MovieWatchlistCLI:
         title = click.prompt("Enter the title of the movie")
         director = click.prompt("Enter the director of the movie")
         genre = click.prompt("Enter the genre of the movie")
-        category_id = click.prompt("Enter the category ID for the movie (optional)", default=None)
+        category_id = click.prompt("Enter the category ID for the movie (optional)", type=int)
         
         movie = Movie.create(self.session, title, director, genre, category_id)
         click.echo(f"Movie added: {movie}")
