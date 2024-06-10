@@ -98,3 +98,12 @@ def list_movies_by_category(category_id):
             click.echo(movie)
     else:
         click.echo("Category not found.")
+
+@cli.command()
+def initdb():
+    """Initialize the database."""
+    init_db()
+    click.echo("Database initialized.")
+
+if __name__ == '__main__':
+    cli()
