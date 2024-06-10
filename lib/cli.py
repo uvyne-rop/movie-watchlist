@@ -19,3 +19,14 @@ def add_movie(title, director, genre, category):
     session = SessionLocal()
     movie = Movie.create(session, title, director, genre, category)
     click.echo(f"Movie added: {movie}")
+
+@cli.command()
+@click.argument('movie_id', type=int)
+def delete_movie(movie_id):
+    """Delete a movie from the watchlist by ID."""
+    session = SessionLocal()
+    success = Movie.delete(session, movie_id)
+    if success:
+        click.echo("Movie deleted successfully.")
+    else:
+        click.echo("Movie not found.")
