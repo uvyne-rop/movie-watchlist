@@ -56,4 +56,13 @@ def show_movie(movie_id):
     else:
         click.echo("Movie not found.")
 
-   
+@cli.command()
+@click.argument('movie_id', type=int)
+@click.argument('rating', type=float)
+@click.argument('comment')
+def add_review(movie_id, rating, comment):
+    """Add a review to a movie."""
+    session = SessionLocal()
+    review = Review.create(session, movie_id, rating, comment)
+    click.echo(f"Review added: {review}")
+
