@@ -30,3 +30,14 @@ def delete_movie(movie_id):
         click.echo("Movie deleted successfully.")
     else:
         click.echo("Movie not found.")
+
+@cli.command()
+def list_movies():
+    """List all movies in the watchlist."""
+    session = SessionLocal()
+    movies = Movie.get_all(session)
+    for movie in movies:
+        category = session.query(Category).filter_by(id=movie.category_id).one_or_none()
+        category_name = category.name if category else "No Category"
+        click.echo(f"{movie} - Category: {category_name}")
+   
