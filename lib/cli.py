@@ -40,4 +40,20 @@ def list_movies():
         category = session.query(Category).filter_by(id=movie.category_id).one_or_none()
         category_name = category.name if category else "No Category"
         click.echo(f"{movie} - Category: {category_name}")
+
+@cli.command()
+@click.argument('movie_id', type=int)
+def show_movie(movie_id):
+    """Show details for a specific movie by ID."""
+    session = SessionLocal()
+    movie = Movie.find_by_id(session, movie_id)
+    if movie:
+        category = session.query(Category).filter_by(id=movie.category_id).one_or_none()
+        category_name = category.name if category else "No Category"
+        click.echo(f"{movie} - Category: {category_name}")
+        for review in movie.reviews:
+            click.echo(f"  Review: {review}")
+    else:
+        click.echo("Movie not found.")
+
    
