@@ -76,3 +76,11 @@ def delete_review(review_id):
         click.echo("Review deleted successfully.")
     else:
         click.echo("Review not found.")
+
+@cli.command()
+def list_categories():
+    """List all categories."""
+    session = SessionLocal()
+    categories = Category.get_all(session)
+    for category in categories:
+        click.echo(category)
