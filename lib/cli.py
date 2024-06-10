@@ -66,3 +66,13 @@ def add_review(movie_id, rating, comment):
     review = Review.create(session, movie_id, rating, comment)
     click.echo(f"Review added: {review}")
 
+@cli.command()
+@click.argument('review_id', type=int)
+def delete_review(review_id):
+    """Delete a review by ID."""
+    session = SessionLocal()
+    success = Review.delete(session, review_id)
+    if success:
+        click.echo("Review deleted successfully.")
+    else:
+        click.echo("Review not found.")
