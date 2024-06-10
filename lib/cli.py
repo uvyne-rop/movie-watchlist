@@ -84,3 +84,17 @@ def list_categories():
     categories = Category.get_all(session)
     for category in categories:
         click.echo(category)
+
+@cli.command()
+@click.argument('category_id', type=int)
+def list_movies_by_category(category_id):
+    """List all movies in a specific category."""
+    session = SessionLocal()
+    category = Category.find_by_id(session, category_id)
+    if category:
+        movies = Movie.find_by_category(session, category_id)
+        click.echo(f"Movies in category '{category.name}':")
+        for movie in movies:
+            click.echo(movie)
+    else:
+        click.echo("Category not found.")
