@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Float
-from sqlalchemy.orm import relationship, declarative_base
-from models import Base, SessionLocal
+from sqlalchemy.orm import relationship
+from models import Base
 
 class Category(Base):
     __tablename__ = 'categories'
@@ -47,7 +47,7 @@ class Movie(Base):
     title = Column(String, nullable=False)
     director = Column(String, nullable=False)
     genre = Column(String, nullable=False)
-    watched = Column(Boolean, default=False)  # New watched attribute
+    watched = Column(Boolean, default=False)
     category_id = Column(Integer, ForeignKey('categories.id'), nullable=True)
     category = relationship('Category', back_populates='movies')
     reviews = relationship('Review', back_populates='movie', cascade='all, delete-orphan')
