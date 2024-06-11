@@ -63,7 +63,7 @@ class MovieWatchlistCLI:
     def register(self):
         """Register a new user."""
         username = click.prompt("Enter a username")
-        password = click.prompt("Enter a password", hide_input=True, confirmation_prompt=True)
+        password = click.prompt("Enter a password", hide_input=False, confirmation_prompt=True)
 
         if User.find_by_username(self.session, username):
             click.echo("Username already exists. Please choose a different username.")
